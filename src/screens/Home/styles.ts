@@ -34,7 +34,6 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
       },
       status: {
-        justifyContent: "space-between",
         flexDirection: "row",
         padding: 20,
         marginTop: 15,
@@ -42,11 +41,48 @@ export const styles = StyleSheet.create({
      createStatus: {
       color: '#4EA8DE',
       fontWeight: "bold",
-      fontSize: 14
+      fontSize: 14,
      },
      finishStatus: {
       color: '#8284FA',
       fontWeight: "bold",
-      fontSize: 14
-     }
+      fontSize: 14,
+      marginLeft: 175 
+     },
+     hrline: {
+      borderBottomColor: '#333333',
+      borderBottomWidth: 1.5,
+      marginTop: 10,
+      width: 360,
+      alignSelf: "center"
+  },
+    statuscount: {
+      backgroundColor: '#262626',
+      borderRadius: 8,
+      width: 25,
+      justifyContent: "center",
+      alignItems: "center",
+      marginLeft: 8
+    },
+    textcount:{
+      color: '#fff',
+      fontWeight: "bold",
+      fontSize: 12
+    },
+    listEmptyTextUpper: {
+      color: '#333333',
+      fontSize: 16,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginTop: 20
+  },
+  listEmptyTextDown: {
+    color: '#333333',
+    fontSize: 14,
+    textAlign: 'center',
+},
+  listEmptyImg: {
+    alignSelf: "center",
+    marginTop: 50
+  }
 })
