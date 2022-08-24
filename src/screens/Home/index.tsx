@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
-import { FlatList, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Task } from '../../components/Task';
 import { styles } from './styles';
 
 export function Home() {
     const [task, setTask] = useState<string[]>([])
+    const [taskText, setTaskText] = useState('')
 
+    function handleTaskAdd(){
+        if(task.includes(taskText)){
+          return Alert.alert("Já existe esta tarefa, adicione outra!")
+        }
+
+        setTask(prevState => [...prevState, taskText])
+        setTaskText('')
+    }
+
+    function handleTaskRemove(task: string){
+        setTask(prevState => prevState.filter(taskItem => taskItem !== task))
+    }
+    
 
     return (
         <View style={styles.container}>
@@ -14,10 +29,13 @@ export function Home() {
                     style={styles.input}
                     placeholder="Adicione uma nova tarefa"
                     placeholderTextColor="#6B6B6B"
+                    onChangeText={setTaskText}
+                    value={taskText}
                 />
 
                 <TouchableOpacity
                     style={styles.button}
+                    onPress={handleTaskAdd}
                 >
                     <Text style={styles.buttonText}>
                         <Image
@@ -45,8 +63,12 @@ export function Home() {
 
             <FlatList
                 data={task}
-                renderItem={() => (
-                    <View />
+                keyExtractor={item => item}
+                renderItem={({ item }) => (
+                    <Task 
+                        taskContent={item}
+                        onRemove={()=> handleTaskRemove(item)} 
+                    />
                 )}
                 ListEmptyComponent={() => (
                     <>
