@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert, FlatList, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { CheckedContext } from '../../../contexts/CheckedContext';
 import { Task } from '../../components/Task';
 import { styles } from './styles';
+
+let countCreate = 0;
 
 export function Home() {
     const [task, setTask] = useState<string[]>([])
     const [taskText, setTaskText] = useState('')
+    
+    const { countChecked } = useContext(CheckedContext)
+
+function countCreateTask(){
+    countCreate = countCreate + 1;
+}
+function countRemoveTask(){
+    countCreate = countCreate - 1;
+}
 
     function handleTaskAdd(){
         if(task.includes(taskText)){
@@ -19,7 +31,7 @@ export function Home() {
     function handleTaskRemove(task: string){
         setTask(prevState => prevState.filter(taskItem => taskItem !== task))
     }
-    
+
 
     return (
         <View style={styles.container}>
@@ -36,6 +48,7 @@ export function Home() {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={handleTaskAdd}
+                    onPressIn={countCreateTask}
                 >
                     <Text style={styles.buttonText}>
                         <Image
@@ -51,11 +64,11 @@ export function Home() {
                     Criadas
                 </Text>
                 <View style={styles.statuscount}>
-                    <Text style={styles.textcount}>0</Text>
+                    <Text style={styles.textcount}>{countCreate}</Text>
                 </View>
                 <Text style={styles.finishStatus}>Concluídas</Text>
                 <View style={styles.statuscount}>
-                    <Text style={styles.textcount}>0</Text>
+                    <Text style={styles.textcount}>{countChecked}</Text>
                 </View>
             </View>
 
@@ -67,7 +80,8 @@ export function Home() {
                 renderItem={({ item }) => (
                     <Task 
                         taskContent={item}
-                        onRemove={()=> handleTaskRemove(item)} 
+                        onRemove={()=> handleTaskRemove(item)}
+                        countRemoveTask={countRemoveTask}
                     />
                 )}
                 ListEmptyComponent={() => (
